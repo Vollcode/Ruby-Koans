@@ -29,8 +29,71 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
 #
 # Your goal is to write the score method.
 
+
+
+
+
+
 def score(dice)
-  # You need to write this method
+
+ # if dice == []
+ #   return 0
+ #  elsif dice == [5]
+ #    return 50
+ #  elsif dice == [1]
+ #     return 100
+ # end  
+     # score = 0
+     # score += 1000 if dice.count(1) >= 3
+     # (2..6).each { |roll| score += roll * 100 if dice.count(roll) >= 3 }
+     # score += 100 * (dice.count(1) % 3)
+     # score += 50 * (dice.count(5) % 3)
+
+
+
+
+@roll = accumulate(dice)
+
+result = 0
+
+result += calculate_score_for_ones
+result += calculate_score_for_fives
+result += calculate_score_of_other_triples
+
+result
+end 
+
+def calculate_score_for_ones
+  result = @roll[1] * 100
+  result += 700 if set_of_three?(1)
+  result
+end
+
+def calculate_score_for_fives
+  result = @roll[5] * 50
+  result += 350 if set_of_three?(5)
+  result
+end
+
+def set_of_three?(number)
+  @roll[number] >= 3
+end
+
+def accumulate(dice)
+  result = Hash.new(0)
+  dice.each do |i|
+    result[i] += 1
+end
+ 
+def calculate_score_of_other_triples
+     result = 0
+  [2,3,4,6].each do |i|
+     result += i * 100 if set_of_three?(i)
+  end
+ result
+end
+
+ result
 end
 
 class AboutScoringProject < Neo::Koan
